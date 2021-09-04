@@ -36,6 +36,10 @@ bigquery = [
     'google-auth>=1.0.0, <2.0.0dev'
 ]
 
+datafold = [
+    'gql==2.0.0'
+]
+
 jsonpath = ['jsonpath_rw==1.4.0']
 
 db2 = [
@@ -88,7 +92,8 @@ salesforce = [
 ]
 
 all_deps = requirements + requirements_dev + kafka + cassandra + glue + snowflake + athena + \
-    bigquery + jsonpath + db2 + dremio + druid + spark + feast + neptune + rds + atlas + salesforce + oracle
+    bigquery + jsonpath + db2 + dremio + druid + spark + feast + neptune + rds + atlas + \
+    salesforce + oracle + datafold
 
 setup(
     name='amundsen-databuilder',
@@ -111,6 +116,7 @@ setup(
         'snowflake': snowflake,
         'athena': athena,
         'bigquery': bigquery,
+        'datafold': datafold,
         'jsonpath': jsonpath,
         'db2': db2,
         'dremio': dremio,
