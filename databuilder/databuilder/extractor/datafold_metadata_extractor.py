@@ -31,7 +31,7 @@ class DatafoldMetadataExtractor(BaseDatafoldExtractor):
         query = gql(
             """
             query {
-              tables(dataSourceId:3){
+              tables(dataSourceId:""" + str(self.datasource_id) + """){
                 items {
                   prop {
                     path
@@ -63,26 +63,20 @@ class DatafoldMetadataExtractor(BaseDatafoldExtractor):
         """
         )
 
-        lineage = []
-
-        def get_amundsen_id(path):
-            s = path.split('.')
-            table_name = f"bigquery://{s[0]}.{s[1]}/{s[2]}"
-            if len(s) > 3:
-                return table_name + "/" + s[3]
-            return table_name
-
         # Execute the query on the transport
         data = client.execute(query)
 
         tables = []
         for table in data['tables']['items']:
             path = self.unquote_path(table['prop']['path'])
+            print(path)
             cols = self._parse_cols(table['columns'])
             desc = table['descriptions'][0]['description'] if len(table['descriptions']) > 0 else ''
+
+            # Change bigquery to another source type as needed
             tables.append(
                 TableMetadata(
-                    database='bigquery',
+                    database=self.datasource_type,
                     cluster=path[0],
                     schema=path[1],
                     name=path[2],

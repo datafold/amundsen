@@ -66,6 +66,8 @@ def create_datafold_metadata_job(metadata_type, host, api_key):
     job_config = ConfigFactory.from_dict({
         f'extractor.datafold_metadata_extractor.{DatafoldMetadataExtractor.HOST_KEY}': host,
         f'extractor.datafold_metadata_extractor.{DatafoldMetadataExtractor.API_KEY_KEY}': api_key,
+        f'extractor.datafold_metadata_extractor.{DatafoldMetadataExtractor.DATASOURCE_ID_KEY}': 30,
+        f'extractor.datafold_metadata_extractor.{DatafoldMetadataExtractor.DATASOURCE_TYPE_KEY}': 'bigquery',
         f'loader.filesystem_csv_neo4j.{FsNeo4jCSVLoader.NODE_DIR_PATH}': node_files_folder,
         f'loader.filesystem_csv_neo4j.{FsNeo4jCSVLoader.RELATION_DIR_PATH}': relationship_files_folder,
         f'loader.filesystem_csv_neo4j.{FsNeo4jCSVLoader.SHOULD_DELETE_CREATED_DIR}': True,

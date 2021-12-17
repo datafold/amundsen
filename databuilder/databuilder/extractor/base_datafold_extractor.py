@@ -40,11 +40,16 @@ class BaseDatafoldExtractor(Extractor):
     """
     HOST_KEY = 'host'
     API_KEY_KEY = 'api_key'
+    DATASOURCE_ID_KEY = 'data_source_id'
+    DATASOURCE_TYPE_KEY = 'data_source_type'
 
     def init(self, conf: ConfigTree) -> None:
         Extractor.init(self, conf)
         self.host = conf.get_string(BaseDatafoldExtractor.HOST_KEY, None)
         self.api_key = conf.get_string(BaseDatafoldExtractor.API_KEY_KEY, None)
+        self.datasource_id = conf.get_int(BaseDatafoldExtractor.DATASOURCE_ID_KEY, -1)
+        self.datasource_type = \
+            conf.get_string(BaseDatafoldExtractor.DATASOURCE_TYPE_KEY, None)
 
         if self.host is None or self.api_key is None:
             raise Exception("Both host and api_key must be configured")

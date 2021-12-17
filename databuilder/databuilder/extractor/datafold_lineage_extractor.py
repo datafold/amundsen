@@ -31,7 +31,7 @@ class DatafoldLineageExtractor(BaseDatafoldExtractor):
         query = gql(
             """
             query {
-              tables(dataSourceId:3){
+              tables(dataSourceId:""" + str(self.datasource_id) + """}){
                 items {
                   prop {
                     path
@@ -61,11 +61,10 @@ class DatafoldLineageExtractor(BaseDatafoldExtractor):
         lineage = []
 
         def get_amundsen_id(path: Tuple[str]):
-            return f"bigquery://{path[0]}.{path[1]}/{path[2]}"
+            return f"{self.datasource_type}://{path[0]}.{path[1]}/{path[2]}"
 
         # Execute the query on the transport
         data = client.execute(query)
-        print(data)
 
         for table in data['tables']['items']:
             am_table_key = get_amundsen_id(self.unquote_path(table['prop']['path']))
